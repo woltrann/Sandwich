@@ -35,6 +35,10 @@ public class MainMenu : MonoBehaviour
     {
         MusicSlider.onValueChanged.AddListener(value => mixer.SetFloat("BGMusicVolume", Mathf.Log10(value) * 20));
         SFXSlider.onValueChanged.AddListener(value => mixer.SetFloat("SFXVolume", Mathf.Log10(value) * 20));
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GamePause();  
+        }
     }
     void SetLanguage(string localeCode)
     {
@@ -47,7 +51,24 @@ public class MainMenu : MonoBehaviour
         MainMenuPanel.SetActive(false);
 
     }
-    public void GamePause() => PauseMenuPanel.SetActive(!PauseMenuPanel.activeSelf);
+
+    public void GamePause()
+    {
+        PauseMenuPanel.SetActive(!PauseMenuPanel.activeSelf);
+
+        if (Cursor.lockState == CursorLockMode.Locked)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            Time.timeScale = 1;
+        }
+    }
     public void Settings() => SettingsMenuPanel.SetActive(!SettingsMenuPanel.activeSelf);
     public void GameOver() => GameOverMenuPanel.SetActive(!GameOverMenuPanel.activeSelf);
     public void Exit() => Application.Quit();
