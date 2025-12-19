@@ -15,6 +15,7 @@ public class MainMenu : MonoBehaviour
     public GameObject PauseMenuPanel;
     public GameObject SettingsMenuPanel;
     public GameObject GameOverMenuPanel;
+    public GameObject WinMenuPanel;
 
     [Header("Sound")]
     public AudioMixer mixer;
@@ -29,6 +30,7 @@ public class MainMenu : MonoBehaviour
     {
         turkish.onClick.AddListener(() => SetLanguage("tr"));
         english.onClick.AddListener(() => SetLanguage("en"));
+        Time.timeScale = 0;
     }
 
     void Update()
@@ -53,9 +55,17 @@ public class MainMenu : MonoBehaviour
         Cursor.visible = false;
         Time.timeScale = 1;
     }
-
+    public void Main()
+    {
+        GamePlayPanel.SetActive(false);
+        MainMenuPanel.SetActive(true);
+        PauseMenuPanel.SetActive(false);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
     public void GamePause()
     {
+        if(!GamePlayPanel.activeSelf) return;
         PauseMenuPanel.SetActive(!PauseMenuPanel.activeSelf);
 
         if (Cursor.lockState == CursorLockMode.Locked)
@@ -73,6 +83,7 @@ public class MainMenu : MonoBehaviour
     }
     public void Settings() => SettingsMenuPanel.SetActive(!SettingsMenuPanel.activeSelf);
     public void GameOver() => GameOverMenuPanel.SetActive(!GameOverMenuPanel.activeSelf);
+    public void Win() => WinMenuPanel.SetActive(!WinMenuPanel.activeSelf);
     public void Exit() => Application.Quit();
     public void Restart() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
