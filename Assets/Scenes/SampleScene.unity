@@ -438,6 +438,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2005119924211257023, guid: 83555a1bb9f07e7488f5295b46d86910, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 108560113664
+      objectReference: {fileID: 0}
+    - target: {fileID: 3331078245104225012, guid: 83555a1bb9f07e7488f5295b46d86910, type: 3}
+      propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
+      value: 156240961536
+      objectReference: {fileID: 0}
     - target: {fileID: 8154766147280374963, guid: 83555a1bb9f07e7488f5295b46d86910, type: 3}
       propertyPath: m_Pivot.x
       value: 0
