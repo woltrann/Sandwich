@@ -49,7 +49,9 @@ public class MainMenu : MonoBehaviour
     {
         GamePlayPanel.SetActive(true);
         MainMenuPanel.SetActive(false);
-
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        Time.timeScale = 1;
     }
 
     public void GamePause()

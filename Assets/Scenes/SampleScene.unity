@@ -538,13 +538,17 @@ PrefabInstance:
       propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
       value: 108560113664
       objectReference: {fileID: 0}
+    - target: {fileID: 3009862812988178937, guid: 83555a1bb9f07e7488f5295b46d86910, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GamePause
+      objectReference: {fileID: 0}
     - target: {fileID: 3331078245104225012, guid: 83555a1bb9f07e7488f5295b46d86910, type: 3}
       propertyPath: m_StringReference.m_TableEntryReference.m_KeyId
       value: 156240961536
       objectReference: {fileID: 0}
     - target: {fileID: 3825123956420503438, guid: 83555a1bb9f07e7488f5295b46d86910, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8154766147280374963, guid: 83555a1bb9f07e7488f5295b46d86910, type: 3}
       propertyPath: m_Pivot.x
