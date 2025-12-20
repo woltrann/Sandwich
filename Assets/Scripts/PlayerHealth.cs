@@ -10,7 +10,8 @@ public class PlayerHealth : MonoBehaviour
     [Header("UI")]
     public Slider healthSlider;
 
-    private bool isDead = false;
+    public bool isDead = false;
+    public MainMenu mainMenu;
 
     void Start()
     {
@@ -45,6 +46,7 @@ public class PlayerHealth : MonoBehaviour
 
         // Buraya animasyon, ses, game over vs. eklenebilir
         Debug.Log("Karakter öldü");
+        mainMenu.GameOver();
 
         // Örnek:
         // GetComponent<PlayerController>().enabled = false;

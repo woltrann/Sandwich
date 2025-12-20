@@ -17,6 +17,8 @@ public class MainMenu : MonoBehaviour
     public GameObject SettingsMenuPanel;
     public GameObject GameOverMenuPanel;
     public GameObject WinMenuPanel;
+    public GameObject BlackScreen;
+    public GameObject LoadingScreen;
 
     [Header("Sound")]
     public AudioMixer mixer;
@@ -35,13 +37,14 @@ public class MainMenu : MonoBehaviour
     public PlayerHealth playerHealth;
 
     public int dieCount = 0;
+    public PlayerHealth health;
 
     void Start()
     {
         dieCount = 0;
         turkish.onClick.AddListener(() => SetLanguage("tr"));
         english.onClick.AddListener(() => SetLanguage("en"));
-        Time.timeScale = 0;
+        Time.timeScale = 1;
     }
 
     void Update()
@@ -61,11 +64,11 @@ public class MainMenu : MonoBehaviour
     public void GameStart()
     {
         GamePlayPanel.SetActive(true);
-        MainMenuPanel.SetActive(false);
+        GameOverMenuPanel.SetActive(false); 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         Time.timeScale = 1;
-
+        health.isDead = false;
         // === PLAYER RESET ===
         player.position = playerSpawnPoint.position;
         player.rotation = playerSpawnPoint.rotation;
@@ -80,6 +83,7 @@ public class MainMenu : MonoBehaviour
         GamePlayPanel.SetActive(false);
         MainMenuPanel.SetActive(true);
         PauseMenuPanel.SetActive(false);
+        GameOverMenuPanel.SetActive(false);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -111,6 +115,8 @@ public class MainMenu : MonoBehaviour
         if (dieCount >= 4)
         {
             Debug.Log("Animasyon Baþlar ve Oyuna Girer");
+            Time.timeScale = 1;
+
         }
         else
         {
@@ -119,8 +125,20 @@ public class MainMenu : MonoBehaviour
         }
         
     }
-    public void Win() => WinMenuPanel.SetActive(!WinMenuPanel.activeSelf);
-    public void Exit() => Application.Quit();
+    public void Win() => MainMenuPanel.SetActive(!MainMenuPanel.activeSelf);
+    public void Exit()
+    {
+        if (BlackScreen.activeSelf)
+        {
+            BlackScreen.SetActive(false);
+            LoadingScreen.SetActive(true);
+        }
+        else
+        {
+            Application.Quit();
+        }
+
+    }
     public void Restart() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
 
