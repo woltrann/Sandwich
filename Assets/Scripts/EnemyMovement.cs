@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -14,12 +15,23 @@ public class EnemyMovement : MonoBehaviour
     [Header("Referanslar")]
     [SerializeField] private Animator animator;
     [SerializeField] private EnemyAttack enemyAttack;
+    public Slider healthSlider;
+    public float maxHealth = 100f;
+    public float currentHealth;
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         if (enemyAttack == null)
             enemyAttack = GetComponent<EnemyAttack>();
+
+        currentHealth = maxHealth;
+
+        if (healthSlider != null)
+        {
+            healthSlider.maxValue = maxHealth;
+            healthSlider.value = currentHealth;
+        }
     }
 
     private void FixedUpdate()
@@ -64,5 +76,18 @@ public class EnemyMovement : MonoBehaviour
     public void EndAttack()
     {
         isAttacking = false;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        //if (isDead) return;
+
+        currentHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
+        if (healthSlider != null)
+            healthSlider.value = currentHealth;
+
+       
     }
 }

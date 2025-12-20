@@ -35,9 +35,9 @@ public class MainMenu : MonoBehaviour
     public Transform enemy;
     public Transform enemySpawnPoint;
     public PlayerHealth playerHealth;
+    public EnemyMovement enemyHealth;
 
     public int dieCount = 0;
-    public PlayerHealth health;
 
     void Start()
     {
@@ -68,7 +68,7 @@ public class MainMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         Time.timeScale = 1;
-        health.isDead = false;
+        playerHealth.isDead = false;
         // === PLAYER RESET ===
         player.position = playerSpawnPoint.position;
         player.rotation = playerSpawnPoint.rotation;
@@ -77,6 +77,9 @@ public class MainMenu : MonoBehaviour
 
         playerHealth.currentHealth = playerHealth.maxHealth;
         playerHealth.healthSlider.value = playerHealth.maxHealth;
+        enemyHealth.currentHealth = enemyHealth.maxHealth;
+        enemyHealth.healthSlider.value = enemyHealth.maxHealth;
+
     }
     public void Main()
     {
