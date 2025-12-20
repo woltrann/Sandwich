@@ -515,6 +515,38 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 384147764}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &456400398
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 456400399}
+  m_Layer: 7
+  m_Name: SwordHoldPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &456400399
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 456400398}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.191341, y: -0.46193925, z: 0.3314132, w: 0.80010384}
+  m_LocalPosition: {x: -2, y: 0, z: 0.00000023841858}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 774263697}
+  m_Father: {fileID: 1893287014}
+  m_LocalEulerAnglesHint: {x: 0, y: -60, z: 45}
 --- !u!1 &513404337
 GameObject:
   m_ObjectHideFlags: 0
@@ -1120,13 +1152,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 774263696}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.4420922, y: 0.32726997, z: 0.17728657, w: 0.8160995}
-  m_LocalPosition: {x: -3.27, y: 0, z: -3.01}
-  m_LocalScale: {x: 1, y: 4.07, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 4, z: 0}
+  m_LocalScale: {x: 1, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1893287014}
-  m_LocalEulerAnglesHint: {x: -56.89, y: 43.703, z: 0}
+  m_Father: {fileID: 456400399}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &774263698
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2822,7 +2854,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1893287014}
   - component: {fileID: 1893287016}
-  - component: {fileID: 1893287015}
+  - component: {fileID: 1893287018}
+  - component: {fileID: 1893287017}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -2844,25 +2877,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1488724762}
-  - {fileID: 774263697}
+  - {fileID: 456400399}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!111 &1893287015
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1893287013}
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_UpdateMode: 0
-  m_CullingType: 0
 --- !u!114 &1893287016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2876,8 +2893,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
+  rotationSpeed: 8
   animator: {fileID: 0}
   enemyAttack: {fileID: 0}
+--- !u!95 &1893287017
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893287013}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 53dd9572f02844b44bf30a885f424963, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1893287018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893287013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1fbb37f9dd70d54ab3465c8406e9470, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackRange: 1.5
+  attackDamage: 10
+  attackCooldown: 1
+  attackDuration: 0.8
+  swordPoint: {fileID: 0}
+  swordRange: 0.6
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  animator: {fileID: 0}
 --- !u!1 &1947567312
 GameObject:
   m_ObjectHideFlags: 0
