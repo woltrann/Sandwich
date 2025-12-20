@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
+using Unity.Mathematics;
 
 
 public class MainMenu : MonoBehaviour
@@ -26,8 +27,18 @@ public class MainMenu : MonoBehaviour
     public Button turkish;
     public Button english;
 
+    [Header("Spawn References")]
+    public Transform player;
+    public Transform playerSpawnPoint;
+    public Transform enemy;
+    public Transform enemySpawnPoint;
+    public PlayerHealth playerHealth;
+
+    public int dieCount = 0;
+
     void Start()
     {
+        dieCount = 0;
         turkish.onClick.AddListener(() => SetLanguage("tr"));
         english.onClick.AddListener(() => SetLanguage("en"));
         Time.timeScale = 0;
@@ -54,6 +65,15 @@ public class MainMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         Time.timeScale = 1;
+
+        // === PLAYER RESET ===
+        player.position = playerSpawnPoint.position;
+        player.rotation = playerSpawnPoint.rotation;
+        enemy.position = enemySpawnPoint.position;
+        enemy.rotation = enemySpawnPoint.rotation;
+
+        playerHealth.currentHealth = playerHealth.maxHealth;
+        playerHealth.healthSlider.value = playerHealth.maxHealth;
     }
     public void Main()
     {
@@ -82,7 +102,23 @@ public class MainMenu : MonoBehaviour
         }
     }
     public void Settings() => SettingsMenuPanel.SetActive(!SettingsMenuPanel.activeSelf);
-    public void GameOver() => GameOverMenuPanel.SetActive(!GameOverMenuPanel.activeSelf);
+    public void GameOver()
+    {
+        dieCount++;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        Time.timeScale = 0;
+        if (dieCount >= 4)
+        {
+            Debug.Log("Animasyon Baþlar ve Oyuna Girer");
+        }
+        else
+        {
+            GameOverMenuPanel.SetActive(!GameOverMenuPanel.activeSelf);
+
+        }
+        
+    }
     public void Win() => WinMenuPanel.SetActive(!WinMenuPanel.activeSelf);
     public void Exit() => Application.Quit();
     public void Restart() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

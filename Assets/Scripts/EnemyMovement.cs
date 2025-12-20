@@ -6,15 +6,18 @@ public class EnemyMovement : MonoBehaviour
 
     [Header("Hareket")]
     [SerializeField] private float moveSpeed = 3f;
+    private bool isAttacking = false;
+
+    [Header("Rotasyon")]
+    [SerializeField] private float rotationSpeed = 8f;
 
     [Header("Referanslar")]
     [SerializeField] private Animator animator;
-    [SerializeField] private EnemyAttack enemyAttack; // Saldýrý davranýþý ayrý bileþen olarak
+    [SerializeField] private EnemyAttack enemyAttack;
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-
         if (enemyAttack == null)
             enemyAttack = GetComponent<EnemyAttack>();
     }
@@ -22,43 +25,44 @@ public class EnemyMovement : MonoBehaviour
     private void FixedUpdate()
     {
         if (player == null) return;
+        if (isAttacking) return; // âœ… TEK KÄ°LÄ°T NOKTASI
 
         Vector3 direction = (player.transform.position - transform.position);
-        float distance = direction.magnitude;
+        direction.y = 0f;
         Vector3 dirNormalized = direction.normalized;
 
-        // Eðer EnemyAttack yoksa sadece takip et
-        if (enemyAttack == null)
+        if (enemyAttack != null && enemyAttack.IsPlayerInRange(transform, player.transform))
         {
-            transform.position += dirNormalized * moveSpeed * Time.fixedDeltaTime;
-            if (animator != null) animator.SetBool("IsMoving", true);
+            LookAtPlayer(dirNormalized);
+            animator?.SetBool("IsMoving", false);
+            enemyAttack.TryAttack(player.transform);
             return;
         }
 
-        // Saldýrý menzilinde mi?
-        if (!enemyAttack.IsPlayerInRange(transform, player.transform))
-        {
-            // Chase
-            transform.position += dirNormalized * moveSpeed * Time.fixedDeltaTime;
-            if (animator != null) animator.SetBool("IsMoving", true);
-        }
-        else
-        {
-            // In attack range: stop and request attack
-            if (animator != null) animator.SetBool("IsMoving", false);
-            enemyAttack.TryAttack(player.transform);
-        }
+        // Chase
+        LookAtPlayer(dirNormalized);
+        transform.position += dirNormalized * moveSpeed * Time.fixedDeltaTime;
+        animator?.SetBool("IsMoving", true);
+    }
+    private void LookAtPlayer(Vector3 direction)
+    {
+        if (direction.sqrMagnitude < 0.001f) return;
+
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(
+            transform.rotation,
+            targetRotation,
+            rotationSpeed * Time.fixedDeltaTime
+        );
+    }
+    public void StartAttack()
+    {
+        isAttacking = true;
+        animator?.SetBool("IsMoving", false);
     }
 
-#if UNITY_EDITOR
-    private void OnDrawGizmosSelected()
+    public void EndAttack()
     {
-        if (enemyAttack != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, /* attackRange : read via enemyAttack */ 0f);
-            // Not possible to access private field here; use EnemyAttack gizmos for ranges.
-        }
+        isAttacking = false;
     }
-#endif
 }

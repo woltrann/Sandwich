@@ -1,25 +1,34 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    [Header("Saldýrý - Genel")]
+    private EnemyMovement enemyMovement;
+
+    [Header("SaldÄ±rÄ± - Genel")]
     [SerializeField] private float attackRange = 1.5f;
     [SerializeField] private float attackDamage = 10f;
     [SerializeField] private float attackCooldown = 1f;
+    [SerializeField] private float attackDuration = 0.8f; // âœ… EKLENDÄ°
 
-    [Header("Kýlýç (Overlap ile hasar)")]
+    [Header("KÄ±lÄ±Ã§ (Overlap ile hasar)")]
     [SerializeField] private Transform swordPoint;
     [SerializeField] private float swordRange = 0.6f;
     [SerializeField] private LayerMask playerLayer;
 
-    [Header("Animasyon (isteðe baðlý)")]
-    [SerializeField] private Animator animator; // Ayný animator'u EnemyMovement ile paylaþabilirsiniz
+    [Header("Animasyon")]
+    [SerializeField] private Animator animator;
 
     private float _lastAttackTime = -Mathf.Infinity;
+
+    private void Awake()
+    {
+        enemyMovement = GetComponent<EnemyMovement>();
+    }
 
     public bool IsPlayerInRange(Transform enemyTransform, Transform playerTransform)
     {
         if (playerTransform == null || enemyTransform == null) return false;
+
         float sqrDistance = (playerTransform.position - enemyTransform.position).sqrMagnitude;
         return sqrDistance <= attackRange * attackRange;
     }
@@ -27,44 +36,35 @@ public class EnemyAttack : MonoBehaviour
     public void TryAttack(Transform playerTransform)
     {
         if (playerTransform == null) return;
-
         if (Time.time - _lastAttackTime < attackCooldown) return;
-
         if (!IsPlayerInRange(transform, playerTransform)) return;
 
         _lastAttackTime = Time.time;
+
+        // === ATTACK STATE BAÅžLAT ===
+        enemyMovement?.StartAttack();
+        Invoke(nameof(EndAttack), attackDuration);
+
         TriggerAttackAnimation();
+    }
+
+    private void EndAttack()
+    {
+        enemyMovement?.EndAttack();
     }
 
     private void TriggerAttackAnimation()
     {
-        if (animator != null)
-            animator.SetTrigger("Attack");
+        animator?.SetTrigger("Attack");
     }
 
-    // Animasyon event'inden çaðrýlacak: saldýrýnýn tam zamanda hasar vermesini saðlar
+    // Animasyon event
     public void DealDamage()
     {
-        if (swordPoint == null)
-        {
-            // Fallback: oyuncu referansýna direkt hasar uygulamak isterseniz dýþarýdan çaðrý yapýlmalý.
-            Debug.LogWarning("EnemyAttack: swordPoint atanmadý. Overlap yapýlmadý.");
-            return;
-        }
-
         Collider[] hits = Physics.OverlapSphere(swordPoint.position, swordRange, playerLayer);
         foreach (Collider hit in hits)
         {
-            var health = hit.GetComponent<PlayerHealth>();
-            if (health != null)
-            {
-                health.TakeDamage(attackDamage);
-                Debug.Log($"EnemyAttack: {hit.name} hasar aldý ({attackDamage}).");
-            }
-            else
-            {
-                Debug.LogWarning($"EnemyAttack: Overlap içinde PlayerHealth yok: {hit.name}");
-            }
+            hit.GetComponent<PlayerHealth>()?.TakeDamage(attackDamage);
         }
     }
 
