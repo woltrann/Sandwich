@@ -2,38 +2,48 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class TypewriterIntroText : MonoBehaviour
+public class TypewriterIntroText: MonoBehaviour
 {
+    public static TypewriterIntroText Instance;
+
     [Header("Referans")]
     [SerializeField] private TextMeshProUGUI textUI;
-    [SerializeField] private GameObject TextPanel;
+    [SerializeField] private GameObject textPanel;
 
-    [Header("Yazý Ayarlarý")]
-    [TextArea(3, 10)]
-    [SerializeField] private string fullText;
+    [Header("Ayarlar")]
     [SerializeField] private float letterDelay = 0.05f;
-
-    [Header("Kapanma")]
     [SerializeField] private float closeDelay = 3f;
 
-    public void StartGame()
+    private Coroutine currentCoroutine;
+
+    private void Awake()
     {
-        textUI.text = "";
-        StartCoroutine(TypeText());
+        Instance = this;
+        //gameObject.SetActive(false);
     }
 
-    private IEnumerator TypeText()
+
+    public void ShowText(string textToWrite)
     {
-        foreach (char c in fullText)
+        if (currentCoroutine != null)
+            StopCoroutine(currentCoroutine);
+        textPanel.SetActive(true);
+        //gameObject.SetActive(true);
+        textUI.text = "";
+
+        currentCoroutine = StartCoroutine(TypeText(textToWrite));
+    }
+
+    private IEnumerator TypeText(string text)
+    {
+        foreach (char c in text)
         {
             textUI.text += c;
             yield return new WaitForSeconds(letterDelay);
         }
 
-        // Tüm yazý yazýldý
         yield return new WaitForSeconds(closeDelay);
-
-        gameObject.SetActive(false);
-        TextPanel.SetActive(false);
+        //gameObject.SetActive(false);
+        textPanel.SetActive(false);
     }
 }

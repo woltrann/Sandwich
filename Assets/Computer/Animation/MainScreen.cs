@@ -10,6 +10,6 @@ public class MainScreen : MonoBehaviour
     {
         mainScreen.SetActive(false);
         //loadingScreen.SetActive(true);
-        text.StartGame();
+        text.ShowText("Yorucu bir mesaiden sonra stres atmalýk bir oyun oynasam iyi olur.");
     }
 }

@@ -79,6 +79,10 @@ public class MainMenu : MonoBehaviour
         playerHealth.healthSlider.value = playerHealth.maxHealth;
         enemyHealth.currentHealth = enemyHealth.maxHealth;
         enemyHealth.healthSlider.value = enemyHealth.maxHealth;
+        if (dieCount == 3)
+        {
+            TypewriterIntroText.Instance.ShowText("Son kez deniyorum! öldün öldün ölmedin ...");
+        }
 
     }
     public void Main()
