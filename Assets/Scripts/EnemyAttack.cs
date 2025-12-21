@@ -8,7 +8,7 @@ public class EnemyAttack : MonoBehaviour
     [SerializeField] private float attackRange = 1.5f;
     [SerializeField] private float attackDamage = 10f;
     [SerializeField] private float attackCooldown = 1f;
-    [SerializeField] private float attackDuration = 0.8f; // ✅ EKLENDİ
+    [SerializeField] private float attackDuration = 0.8f;
 
     [Header("Kılıç (Overlap ile hasar)")]
     [SerializeField] private Transform swordPoint;

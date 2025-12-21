@@ -37,7 +37,7 @@ public class EnemyMovement : MonoBehaviour
     private void FixedUpdate()
     {
         if (player == null) return;
-        if (isAttacking) return; // ✅ TEK KİLİT NOKTASI
+        if (isAttacking) return;
 
         Vector3 direction = (player.transform.position - transform.position);
         direction.y = 0f;

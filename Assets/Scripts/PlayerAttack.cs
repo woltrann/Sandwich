@@ -10,7 +10,7 @@ public class PlayerAttack : MonoBehaviour
     [Header("Saldırı Ayarları")]
     [SerializeField] private Transform attackPoint; // Klavyenin ucuna koyacağın boş obje
     [SerializeField] private float attackRange = 0.5f; // Vuruşun etki alanı
-    [SerializeField] private LayerMask enemyLayers; // Hangi layer 'Düşman' sayılacak?
+    [SerializeField] private LayerMask enemyLayers;
 
     private InputAction attackAction;
 

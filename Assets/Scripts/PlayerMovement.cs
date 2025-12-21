@@ -104,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (animator)
         {
-            animator.SetTrigger("IsJumped");
+            //animator.SetTrigger("IsJumped");
         }
     }
 
