@@ -39,6 +39,7 @@ public class MainMenu : MonoBehaviour
     public EnemyMovement enemyHealth;
 
     public int dieCount = 0;
+    public Animator klavye;
 
     void Start()
     {
@@ -64,6 +65,7 @@ public class MainMenu : MonoBehaviour
     }
     public void GameStart()
     {
+        klavye.SetTrigger("idle");
         GamePlayPanel.SetActive(true);
         GameOverMenuPanel.SetActive(false); 
         Cursor.lockState = CursorLockMode.Locked;
@@ -137,6 +139,7 @@ public class MainMenu : MonoBehaviour
 
     private IEnumerator NextScene()
     {
+        klavye.SetTrigger("break");
         yield return new WaitForSeconds(3);
         SceneManager.LoadScene(1);
         

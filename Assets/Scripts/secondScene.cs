@@ -4,7 +4,7 @@ public class secondScene : MonoBehaviour
 {
     void Start()
     {
-        TypewriterIntroText.Instance.ShowText("Son kez deniyorum! öldün öldün ölmedin ...");
+        TypewriterIntroText.Instance.ShowText("Sen þimdi naneyi yimedin mi ...");
 
     }
 
