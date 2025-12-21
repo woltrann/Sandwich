@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using Unity.Mathematics;
+using System.Collections;
 
 
 public class MainMenu : MonoBehaviour
@@ -124,12 +125,20 @@ public class MainMenu : MonoBehaviour
             Debug.Log("Animasyon Baþlar ve Oyuna Girer");
             Time.timeScale = 1;
 
+            StartCoroutine (NextScene());
         }
         else
         {
             GameOverMenuPanel.SetActive(!GameOverMenuPanel.activeSelf);
 
         }
+        
+    }
+
+    private IEnumerator NextScene()
+    {
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene(1);
         
     }
     public void Win() => MainMenuPanel.SetActive(!MainMenuPanel.activeSelf);
